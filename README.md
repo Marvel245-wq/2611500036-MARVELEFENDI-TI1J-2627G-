@@ -1,2 +1,8 @@
-# 2611500036-MARVELEFENDI-TI1J-2627G-
-Repository Latihan Pertemuan-1 sampai dengan Pertemuan-16 Matakuliah Pemrograman Web  Dasar Kelompok TI1J Tahun Ajaran 2026/2027 Semester Gasal 
+# Pemrograman Web Dasar
+Nama: [Marvel Efendi]
+NIM: [211500036]
+Kelompok: [TI1J]
+Tahun Ajaran: 2026/2027 Gasal
+Repository ini digunakan untuk mendokumentasikan
+perkembangan pembelajaran mata kuliah Pemrograman Web
+Dasar dari Pertemuan 1 sampai dengan Pertemuan 16.
