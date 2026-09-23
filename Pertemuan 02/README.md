@@ -9,8 +9,8 @@ Pada P2 saya membangun halaman profil menggunakan struktur HTML5 yang valid,
 elemen semantik, teks, daftar, tautan, dan gambar.
 ## Validasi HTML
 - Berkas yang divalidasi: `index.html`
-- Galat yang ditemukan: [tuliskan jika ada]
-- Perbaikan yang dilakukan: [tuliskan]
-- Hasil validasi akhir: [tuliskan hasil]
+- Galat yang ditemukan: [bagian foto profile nya , kadang bisa kadang tidak , dan sudah teratasi]
+- Perbaikan yang dilakukan: [mengubah format file foto,dan nama file fotonyanya yang berada di img src]
+- Hasil validasi akhir: [tampilan sudah seperti yang diperlukan]
 ## GitHub Pages
-URL: [tempel URL halaman P2]
+URL: [https://marvel245-wq.github.io/2611500036-MARVELEFENDI-TI1J-2627G-/Pertemuan%2002/]
