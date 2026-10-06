@@ -12,8 +12,8 @@ padding: 12px;
 display: flex; 
 flex-direction: row; 
  justify-content: space-around; 
- align-items: stretch; 
- gap: 8px; 
+ align-items: center; 
+ gap: 6px; 
 margin: 0; 
 padding: 0; 
 list-style: none; 
@@ -126,7 +126,7 @@ margin: 0;
             grid-column: 1 / -1;
             margin: 0; 
         }
-        
+
         #contact h2 { 
             margin-top: 0; 
             } 
@@ -186,4 +186,10 @@ margin: 0;
             
         footer p { 
                 margin: 0;  
+        }
+        @media (min-width: 768px) { 
+        /* aturan CSS untuk viewport dengan lebar minimal 768px */ 
+        main { 
+            grid-template-columns: 1fr 1fr; 
+        } 
         }
