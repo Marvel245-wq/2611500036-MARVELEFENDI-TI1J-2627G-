@@ -25,6 +25,12 @@ font-weight: bold;
 text-decoration: none; 
 } 
 
+main { 
+display: grid; 
+grid-template-columns: 1fr;
+grid-gap: 20px;
+} 
+
 /* Header */ 
 header { 
   background-color: #003366; 
@@ -117,10 +123,10 @@ margin: 0;
             padding: 20px;
             margin: 20px 0;
             font-family: Arial, sans-serif; 
-        }
-        #contact { 
+            grid-column: 1 / -1;
             margin: 0; 
-            }
+        }
+        
         #contact h2 { 
             margin-top: 0; 
             } 
