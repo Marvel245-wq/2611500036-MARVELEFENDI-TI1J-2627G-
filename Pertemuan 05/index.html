@@ -10,7 +10,8 @@
     <header>
         <h1>Profil Mahasiswa</h1>
         <nav>
-            <ul>
+            <button type="button" id="navToggle" aria-expanded="false" aria-controls="navMenu" aria-label="Buka navigasi">Menu</button>
+            <ul id="navMenu">
                 <li><a href="#home">Beranda</a></li>
                 <li><a href="#about">Tentang</a></li>
                 <li><a href="#contact">Kontak</a></li>
@@ -39,7 +40,7 @@
 <section id="contact">
     <h2>Kontak</h2>
    <p> Kunjungi <a href="https://github.com/Marvel245-wq/2611500036-MARVELEFENDI-TI1J-2627G-.git">profil GitHub saya</a>.</p>
-   <form action="index.html" method="get">
+   <form id="contactForm" action="index.html" method="get">
 <div class="form-group">
 <label for="nama">Nama Lengkap</label><br>
 <input class="input-form"
@@ -80,10 +81,10 @@ required>
 </div>
 <div class="form-group">
     <p>Jenis Pesan</p>
-    <input type="radio" id="Pertanyaan" name="jenis_pesan"
+    <input type="radio" id="pertanyaan" name="jenis_pesan"
 value="Pertanyaan" required>
     <label for="pertanyaan">Pertanyaan</label><br> 
-    <input type="radio" id="Saran" name="jenis_pesan"
+    <input type="radio" id="saran" name="jenis_pesan"
 value="Saran">
     <label for="saran">Saran</label>
 </div>
@@ -109,12 +110,14 @@ value="Saran">
     id="pesan" 
     name="pesan"
     maxlength="300"
-    placeholder="Tulis pesan Anda di sini 
-    required"></textarea>
+    placeholder="Tulis pesan Anda di sini"
+    required></textarea>
 </div>
+<p id="formFeedback" aria-live="polite"></p>
 <div class="form-group">
     <button type="submit">Kirim</button>
     <button type="reset">Batal</button>
+    </div>
 </form>
 </section>
  </main>
