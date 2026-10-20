@@ -7,10 +7,14 @@
     <link rel="stylesheet" href="style.css"/>  
 </head>
 <body>
-    <?php 
-// Pengujian awal eksekusi PHP. 
-echo "PHP berhasil dijalankan."; 
-?>
+<?php 
+// Komentar satu baris. 
+print "Keluaran menggunakan echo.";
+/* 
+Komentar beberapa baris. 
+Komentar ini tidak ditampilkan pada halaman. 
+*/ 
+?> 
     <header>
         <h1>Profil Mahasiswa</h1>
         <nav>
