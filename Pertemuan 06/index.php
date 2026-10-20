@@ -17,8 +17,11 @@ Komentar ini tidak ditampilkan pada halaman.
 ?> 
 <p>Konten HTML statis.</p> 
 <?php 
-echo "<p>Konten yang dihasilkan oleh PHP.</p>"; 
+echo "<p>Konten yang dihasilkan oleh php.</p>"; 
+const NAMA_MATA_KULIAH = "Pemrograman Web Dasar"; 
+const PROFIL_GITHUB = "Marvelq245-wq"; 
 ?> 
+
     <header>
         <h1>Profil Mahasiswa</h1>
         <nav>
