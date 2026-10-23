@@ -5,11 +5,13 @@ $nim = "2611500036";
 $namaMahasiswa = "Marvel Efendi"; 
 $programStudi = "Teknik Informatika"; 
 $tahunAkademik = "2026/2027"; 
-$semester = 1; 
+$semester = 2; 
 $batasSemester = 8; 
 $sisaSemester = $batasSemester - $semester; 
-$ipk = 4.0; 
 $statusAktif = true; 
+$semesterValid = $semester >= 1 && $semester <= $batasSemester; 
+$statusSemester = ($semesterValid && $statusAktif) ? "Sesuai rentang" : "Perlu diperiksa"; 
+$ipk = 4.0; 
 $catatanTambahan = null; 
 ?> 
 <!DOCTYPE html>
@@ -60,6 +62,7 @@ const PROFIL_GITHUB = "Marvelq245-wq";
     <article>
         <h3>Profil Singkat</h3>
         <p>Sisa semester hingga batas: <?php echo $sisaSemester; ?></p> 
+        <p>Pemeriksaan rentang semester: <?php echo $statusSemester; ?></p> 
         <p>Saya mahasiswa Program Studi Teknik Informatika.</p>
         <h3>Target Belajar</h3>
         <ol>
