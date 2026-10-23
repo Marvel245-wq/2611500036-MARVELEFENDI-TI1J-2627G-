@@ -18,6 +18,8 @@ if ($semester < 3) {
 } else { 
     $keteranganSemester = "Semester akhir"; 
 } 
+$namaProdi = ($programStudi == "SI") ? "Sistem Informasi" : (($programStudi == "TI") ? "Teknik 
+Informatika" : "Program Studi Lain"); 
 $ipk = 4.0; 
 $catatanTambahan = null; 
 ?> 
@@ -71,6 +73,8 @@ const PROFIL_GITHUB = "Marvelq245-wq";
         <p>Sisa semester hingga batas: <?php echo $sisaSemester; ?></p> 
         <p>Pemeriksaan rentang semester: <?php echo $statusSemester; ?></p> 
         <p>Semester: <?php echo $semester . " (" . $keteranganSemester . ")"; ?></p> 
+        <p>Program Studi: <?php echo $namaProdi . " (" . $programStudi . ")"; ?></p> 
+        <p>Status mahasiswa: <?php echo $statusAktif ? "Aktif" : "Tidak aktif"; ?></p> 
         <p>Saya mahasiswa Program Studi Teknik Informatika.</p>
         <h3>Target Belajar</h3>
         <ol>
