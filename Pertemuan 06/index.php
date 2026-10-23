@@ -42,17 +42,7 @@ $catatanTambahan = null;
     <link rel="stylesheet" href="style.css"/>  
 </head>
 <body>
-<?php 
-// Komentar satu baris. 
-print "Keluaran menggunakan echo.";
-/* 
-Komentar beberapa baris. 
-Komentar ini tidak ditampilkan pada halaman. 
-*/ 
-?> 
-<p>Konten HTML statis.</p> 
-<?php 
-echo "<p>Konten yang dihasilkan oleh php.</p>"; 
+<?php
 const NAMA_MATA_KULIAH = "Pemrograman Web Dasar"; 
 const PROFIL_GITHUB = "Marvelq245-wq"; 
 ?> 
@@ -87,12 +77,44 @@ const PROFIL_GITHUB = "Marvelq245-wq";
         <p>Fokus program studi: <?php echo $fokusProgramStudi; ?></p> 
         <p>Status mahasiswa: <?php echo $statusAktif ? "Aktif" : "Tidak aktif"; ?></p> 
         <p>Saya mahasiswa Program Studi Teknik Informatika.</p>
-        <h3>Target Belajar</h3>
-        <ol>
-            <li>Memahami struktur HTML5.</li>
-            <li>Menyusun halaman web semantik.</li>
-            <li>Memvalidasi dokumen HTML.</li>
-        </ol>
+        <p>IPK: <?php echo number_format($ipk, 2, ',', '.'); ?></p>
+       <h3>Target Belajar (Perulangan for)</h3> 
+<ol> 
+<?php 
+// Perulangan for tanpa array; materi larik dibahas pada P9. 
+for ($i = 1; $i <= 5; $i++) { 
+echo "<li>Target belajar ke-" . $i . ": "; 
+switch ($i) { 
+case 1: 
+echo "Memahami sintaks dasar PHP."; 
+break; 
+case 2: 
+echo "Menggunakan variabel dan konstanta."; 
+break; 
+case 3: 
+echo "Menerapkan operator dan percabangan."; 
+break; 
+case 4: 
+echo "Menggunakan perulangan for dan while."; 
+break; 
+default: 
+echo "Belum dipetakan"; 
+break; 
+} 
+echo "</li>"; 
+} 
+?> 
+</ol> 
+<h3>Semester (Perulangan while):</h3> 
+<ol> 
+<?php 
+$nomorSemester = 1; 
+while ($nomorSemester <= 3) { 
+echo "<li>Semester " . $nomorSemester . "</li>"; 
+$nomorSemester++; // operator penugasan 
+} 
+?> 
+</ol>
     </article>
     </section>
 <section id="contact">
