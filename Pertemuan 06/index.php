@@ -5,7 +5,9 @@ $nim = "2611500036";
 $namaMahasiswa = "Marvel Efendi"; 
 $programStudi = "Teknik Informatika"; 
 $tahunAkademik = "2026/2027"; 
-$semester = 2; 
+$semester = 1; 
+$batasSemester = 8; 
+$sisaSemester = $batasSemester - $semester; 
 $ipk = 4.0; 
 $statusAktif = true; 
 $catatanTambahan = null; 
@@ -57,6 +59,7 @@ const PROFIL_GITHUB = "Marvelq245-wq";
         <h2>Tentang Saya</h2>
     <article>
         <h3>Profil Singkat</h3>
+        <p>Sisa semester hingga batas: <?php echo $sisaSemester; ?></p> 
         <p>Saya mahasiswa Program Studi Teknik Informatika.</p>
         <h3>Target Belajar</h3>
         <ol>
