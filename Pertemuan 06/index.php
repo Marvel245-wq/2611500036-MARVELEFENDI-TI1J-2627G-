@@ -121,8 +121,11 @@ $nomorSemester++; // operator penugasan
     </section>
 <section id="contact">
     <h2>Kontak</h2>
-   <p> Kunjungi <a href="https://github.com/Marvel245-wq/2611500036-MARVELEFENDI-TI1J-2627G-.git">profil GitHub saya</a>.</p>
-   <form id="contactForm" action="index.html" method="get">
+   <p> 
+  Kunjungi 
+  <a target="_blank" href="https://github.com/Marvel245-wq/2611500036-MARVELEFENDI-TI1J-2627G-.git<?= PROFIL_GITHUB ?>">profil GitHub saya</a>. 
+</p> 
+  <form id="contactForm" action="index.php" method="get" novalidate> 
 <div class="form-group">
 <label for="nama">Nama Lengkap</label><br>
 <input class="input-form"
