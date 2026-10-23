@@ -20,6 +20,16 @@ if ($semester < 3) {
 } 
 $namaProdi = ($programStudi == "SI") ? "Sistem Informasi" : (($programStudi == "TI") ? "Teknik 
 Informatika" : "Program Studi Lain"); 
+switch ($programStudi) { 
+  case "SI": 
+ $fokusProgramStudi = "Sistem informasi dan proses bisnis"; 
+    break; 
+  case "TI": 
+    $fokusProgramStudi = "Komputasi dan pengembangan perangkat lunak"; 
+    break; 
+  default: 
+    $fokusProgramStudi = "Belum ditentukan"; 
+} 
 $ipk = 4.0; 
 $catatanTambahan = null; 
 ?> 
@@ -74,6 +84,7 @@ const PROFIL_GITHUB = "Marvelq245-wq";
         <p>Pemeriksaan rentang semester: <?php echo $statusSemester; ?></p> 
         <p>Semester: <?php echo $semester . " (" . $keteranganSemester . ")"; ?></p> 
         <p>Program Studi: <?php echo $namaProdi . " (" . $programStudi . ")"; ?></p> 
+        <p>Fokus program studi: <?php echo $fokusProgramStudi; ?></p> 
         <p>Status mahasiswa: <?php echo $statusAktif ? "Aktif" : "Tidak aktif"; ?></p> 
         <p>Saya mahasiswa Program Studi Teknik Informatika.</p>
         <h3>Target Belajar</h3>
