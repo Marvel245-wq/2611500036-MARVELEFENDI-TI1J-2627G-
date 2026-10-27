@@ -1,4 +1,34 @@
 <?php 
+//P7
+$nama = $_GET['nama'] ?? '';
+$email = $_GET['email'] ?? '';
+$semester = $_GET['semester'] ?? '';
+$tanggal = $_GET['tanggal'] ?? '';
+$jenisPesan = $_GET['jenis_pesan'] ?? '';
+$minat = $_GET['minat'] ?? [];
+$prodi = $_GET['prodi'] ?? '';
+$pesan = $_GET['pesan'] ?? '';
+$submit = $_GET['submit'] ?? '';
+
+if (is_array($minat)) {
+    $minatTampil = implode(', ', array_map('htmlspecialchars', $minat));
+} else {
+    $minatTampil = htmlspecialchars((string) $minat);
+}
+
+if ($nama !== '' || $email !== '' || $semester !== '' || $tanggal !== '' || $jenisPesan !== '' || $prodi !== '' || $pesan !== '' || $submit !== '' || !empty($minat)) {
+    echo '<pre>';
+    echo 'Nama: ' . htmlspecialchars((string) $nama) . PHP_EOL;
+    echo 'Email: ' . htmlspecialchars((string) $email) . PHP_EOL;
+    echo 'Semester: ' . htmlspecialchars((string) $semester) . PHP_EOL;
+    echo 'Tanggal: ' . htmlspecialchars((string) $tanggal) . PHP_EOL;
+    echo 'Jenis Pesan: ' . htmlspecialchars((string) $jenisPesan) . PHP_EOL;
+    echo 'Minat: ' . $minatTampil . PHP_EOL;
+    echo 'Prodi: ' . htmlspecialchars((string) $prodi) . PHP_EOL;
+    echo 'Pesan: ' . htmlspecialchars((string) $pesan) . PHP_EOL;
+    echo 'Submit: ' . htmlspecialchars((string) $submit) . PHP_EOL;
+    echo '</pre>';
+}
 // P6: PHP dasar dan pemrograman sisi peladen 
 // Bagian 1: Variabel dan konstanta 
 $nim = "2611500036"; 
@@ -125,7 +155,7 @@ $nomorSemester++; // operator penugasan
   Kunjungi 
   <a target="_blank" href="https://github.com/Marvel245-wq/2611500036-MARVELEFENDI-TI1J-2627G-.git<?= PROFIL_GITHUB ?>">profil GitHub saya</a>. 
 </p> 
-  <form id="contactForm" action="index.php" method="get" novalidate> 
+  <form id="contactForm" action="index.php" method="post" novalidate> 
 <div class="form-group">
 <label for="nama">Nama Lengkap</label><br>
 <input class="input-form"
