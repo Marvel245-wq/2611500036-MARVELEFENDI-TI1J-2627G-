@@ -1,87 +1,77 @@
 <?php
-if (isset($_GET['nama'])) {
-    $nama = $_GET['nama'];
-    echo "Nama yang diterima: " . htmlspecialchars($nama, ENT_QUOTES, 'UTF-8');
-}
-$nama = trim((string) ($_POST['nama'] ?? ''));
-$email = trim((string) ($_POST['email'] ?? ''));
-$semesterForm = trim((string) ($_POST['semester'] ?? ''));
-$jenisPesan = trim((string) ($_POST['jenis_pesan'] ?? ''));
-$prodi = trim((string) ($_POST['prodi'] ?? ''));
-$pesan = trim((string) ($_POST['pesan'] ?? ''));
-$tanggal = trim((string) ($_POST['tanggal'] ?? ''));
-$minat = $_POST['minat'] ?? [];
+session_start();
 
-$pesanKesalahan = '';
+$nama = isset($_POST['nama']) && is_string($_POST['nama']) ? trim($_POST['nama']) : '';
+$email = isset($_POST['email']) && is_string($_POST['email']) ? trim($_POST['email']) : '';
+$semesterForm = isset($_POST['semester']) && is_string($_POST['semester']) ? trim($_POST['semester']) : '';
+$jenisPesan = isset($_POST['jenis_pesan']) && is_string($_POST['jenis_pesan']) ? trim($_POST['jenis_pesan']) : '';
+$prodi = isset($_POST['prodi']) && is_string($_POST['prodi']) ? trim($_POST['prodi']) : '';
+$pesan = isset($_POST['pesan']) && is_string($_POST['pesan']) ? trim($_POST['pesan']) : '';
+$tanggal = isset($_POST['tanggal']) && is_string($_POST['tanggal']) ? trim($_POST['tanggal']) : '';
+$minat = $_POST['minat'] ?? [];
+if (is_string($minat) && $minat !== '') {
+    $minat = [$minat];
+} elseif (!is_array($minat)) {
+    $minat = [];
+}
+
+$daftarKesalahan = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (trim($semesterForm) !== '') {
-        $semesterValid = filter_var(
-            $semesterForm,
-            FILTER_VALIDATE_INT
-        );
+    if ($nama === '') {
+        $daftarKesalahan[] = 'Nama lengkap wajib diisi.';
+    }
+    if ($email === '') {
+        $daftarKesalahan[] = 'Email wajib diisi.';
+    } elseif (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+        $daftarKesalahan[] = 'Format email tidak valid.';
+    }
 
-        if (
-            $semesterValid === false ||
-            $semesterValid < 1 ||
-            $semesterValid > 14
-        ) {
-            $pesanKesalahan .= 'Semester harus berupa bilangan bulat antara 1 dan 14. ';
+    if ($semesterForm === '') {
+        $daftarKesalahan[] = 'Semester wajib diisi.';
+    } else {
+        $semesterValid = filter_var($semesterForm, FILTER_VALIDATE_INT);
+        if ($semesterValid === false || $semesterValid < 1 || $semesterValid > 14) {
+            $daftarKesalahan[] = 'Semester harus berupa bilangan bulat antara 1 dan 14.';
         }
     }
-    if (trim($email) !== '') {
-        if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-            $pesanKesalahan .= 'Format email tidak valid. ';
-        }
 
-        if (!in_array($jenisPesan, ['pertanyaan', 'saran'], true)) {
-            $pesanKesalahan .= 'Jenis pesan tidak valid. ';
-        }
+    if ($tanggal === '') {
+        $daftarKesalahan[] = 'Tanggal kunjungan wajib diisi.';
+    }
 
-        if (!in_array($prodi, ['SI', 'TI'], true)) {
-            $pesanKesalahan .= 'Program studi tidak valid. ';
-        }
+    if ($jenisPesan === '') {
+        $daftarKesalahan[] = 'Jenis pesan wajib dipilih.';
+    }
+    if ($prodi === '') {
+        $daftarKesalahan[] = 'Program studi wajib dipilih.';
+    }
+    if ($pesan === '') {
+        $daftarKesalahan[] = 'Pesan wajib diisi.';
+    }
 
-        $minatDiizinkan = ['HTML', 'CSS'];
+    $minatDiizinkan = ['HTML', 'CSS'];
+    if (!is_array($minat) || count($minat) === 0) {
+        $daftarKesalahan[] = 'Minat wajib dipilih minimal satu.';
+    }
 
-        if (!is_array($minat)) {
-            $pesanKesalahan .= 'Format pilihan topik tidak valid. ';
-        } else {
-            foreach ($minat as $topik) {
-                if (!in_array($topik, $minatDiizinkan, true)) {
-                    $pesanKesalahan .= 'Pilihan topik tidak valid. ';
-                    break;
-                }
+    if (!in_array($jenisPesan, ['pertanyaan', 'saran'], true)) {
+        $daftarKesalahan[] = 'Jenis pesan tidak valid.';
+    }
+    if (!in_array($prodi, ['SI', 'TI'], true)) {
+        $daftarKesalahan[] = 'Program studi tidak valid.';
+    }
+
+    if (is_array($minat) && count($minat) > 0) {
+        foreach ($minat as $topik) {
+            if (!is_string($topik) || !in_array($topik, $minatDiizinkan, true)) {
+                $daftarKesalahan[] = 'Pilihan topik tidak valid.';
+                break;
             }
         }
     }
-    if (trim($nama ?? '') === '') {
-        $pesanKesalahan .= 'Nama lengkap wajib diisi. ';
-    }
-    if (trim($email) === '') {
-        $pesanKesalahan .= 'Email wajib diisi. ';
-    }
-    if (trim($semesterForm) === '') {
-        $pesanKesalahan .= 'Semester wajib diisi. ';
-    }
-    if (trim($tanggal) === '') {
-        $pesanKesalahan .= 'Tanggal kunjungan wajib diisi. ';
-    }
-    if ($jenisPesan === '') {
-        $pesanKesalahan .= 'Jenis pesan wajib dipilih. ';
-    }
-
-    if ($prodi === '') {
-        $pesanKesalahan .= 'Program studi wajib dipilih. ';
-    }
-
-    if (trim($pesan) === '') {
-        $pesanKesalahan .= 'Pesan wajib diisi. ';
-    }
-    if (empty($minat)) {
-        $pesanKesalahan .= 'Minat wajib dipilih minimal satu. ';
-    }
 }
+$pesanKesalahan = implode(' ', $daftarKesalahan);
 // P6: PHP dasar dan pemrograman sisi peladen
 // Bagian 1: Variabel dan konstanta
 $nim = "2611500036";
@@ -124,6 +114,31 @@ switch ($programStudi) {
     default:
         $fokusProgramStudi = "Belum ditentukan";
 }
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $_SESSION['pesanKesalahan'] = $pesanKesalahan;
+
+    $_SESSION['nama'] = $nama;
+    $_SESSION['email'] = $email;
+    $_SESSION['semester'] = $semesterForm;
+    $_SESSION['tanggal'] = $tanggal;
+    $_SESSION['jenis_pesan'] = $jenisPesan;
+    $_SESSION['prodi'] = $prodi;
+    $_SESSION['minat'] = $minat;
+    $_SESSION['pesan'] = $pesan;
+
+    header('Location: index.php');
+    exit;
+}
+$pesanKesalahan = $_SESSION['pesanKesalahan'] ?? '';
+
+$nama = $_SESSION['nama'] ?? '';
+$email = $_SESSION['email'] ?? '';
+$semesterForm = $_SESSION['semester'] ?? '';
+$tanggal = $_SESSION['tanggal'] ?? date("Y-m-d");
+$jenisPesan = $_SESSION['jenis_pesan'] ?? '';
+$prodi = $_SESSION['prodi'] ?? '';
+$minat = $_SESSION['minat'] ?? '';
+$pesan = $_SESSION['pesan'] ?? '';
 ?>
 <!doctype html>
 <html lang="id">
@@ -225,13 +240,24 @@ switch ($programStudi) {
 
         <section id="contact">
             <h2>Kontak</h2>
+            <?php if ($pesanKesalahan !== ''): ?>
+                <p class="form-feedback-error">
+                    <?= htmlspecialchars($pesanKesalahan, ENT_QUOTES, 'UTF-8') ?>
+                </p>
+                <?php
+                unset(
+                    $_SESSION['pesanKesalahan']
+                );
+                ?>
+            <?php endif; ?>
+            <p id="formFeedback" aria-live="polite"></p>
 
             <p>
                 Kunjungi
                 <a target="_blank" href="https://github.com/Marvel245-wq/2611500036-MARVELEFENDI-TI1J-2627G-.git<?= PROFIL_GITHUB ?>">profil GitHub saya</a>.
             </p>
 
-            <form id="contactForm" action="index.php" method="get" novalidate>
+            <form id="contactForm" action="index.php" method="post" novalidate>
                 <div class="form-group">
                     <label for="nama">Nama Lengkap</label><br />
 
@@ -277,10 +303,10 @@ switch ($programStudi) {
                 <div class="form-group">
                     <p>Topik yang Diminati</p>
 
-                    <input type="checkbox" id="minat-html" name="minat[]" value="HTML" />
+                    <input type="checkbox" id="minat-html" name="minat[]" value="HTML" <?= in_array('HTML', $minat, true) ? 'checked' : '' ?> />
                     <label for="minat-html">HTML</label>
 
-                    <input type="checkbox" id="minat-css" name="minat[]" value="CSS" />
+                    <input type="checkbox" id="minat-css" name="minat[]" value="CSS" <?= in_array('CSS', $minat, true) ? 'checked' : '' ?> />
                     <label for="minat-css">CSS</label>
                 </div>
 
@@ -308,8 +334,52 @@ switch ($programStudi) {
 
                 <button type="submit">Kirim</button>
                 <button type="reset">Batal</button>
-                <p id="formFeedback"></p>
             </form>
+            <?php if (!empty($nama)): ?>
+                <h3>Data yang Diterima Peladen</h3>
+
+                <p>Nama:
+                    <?= htmlspecialchars($nama, ENT_QUOTES, 'UTF-8') ?>
+                </p>
+
+                <p>Email:
+                    <?= htmlspecialchars($email, ENT_QUOTES, 'UTF-8') ?>
+                </p>
+
+                <p>Semester:
+                    <?= htmlspecialchars($semesterForm, ENT_QUOTES, 'UTF-8') ?>
+                </p>
+
+                <p>Tanggal kunjungan:
+                    <?= htmlspecialchars($tanggal, ENT_QUOTES, 'UTF-8') ?>
+                </p>
+
+                <p>Jenis pesan:
+                    <?= htmlspecialchars($jenisPesan, ENT_QUOTES, 'UTF-8') ?>
+                </p>
+
+                <p>Program studi:
+                    <?= htmlspecialchars($prodi, ENT_QUOTES, 'UTF-8') ?>
+                </p>
+
+                <p>Minat:</p>
+
+                <?php if (is_array($minat) && count($minat) > 0): ?>
+                    <ul>
+                        <?php foreach ($minat as $topik): ?>
+                            <li>
+                                <?= htmlspecialchars((string) $topik, ENT_QUOTES, 'UTF-8') ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php else: ?>
+                    <p>Tidak ada minat yang dipilih.</p>
+                <?php endif; ?>
+
+                <p>Pesan:</p>
+
+                <p><?= nl2br(htmlspecialchars($pesan, ENT_QUOTES, 'UTF-8')) ?></p>
+            <?php endif; ?>
         </section>
     </main>
 
