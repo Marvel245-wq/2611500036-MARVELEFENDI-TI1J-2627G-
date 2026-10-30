@@ -12,4 +12,5 @@ Pada p7, saya melakukan
 8. Memakai trim dan string pada line 6 sampai 12
 9. Mengubah dan mengetes script java jika di close dan di buka , terus menguji kembali apakah normal atau ada masalah dan berjalan lancar
 10. menerapkan session dan pola pola prg pada webnya
-11.
+11. setelah dicoba dengan cara cara di modul , ternyata berfungsi seperti semestinya
+12. sisa tinggal perubahan tentang pembentukan kartu dan segala macamnya nanti pas uts
