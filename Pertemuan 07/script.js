@@ -33,7 +33,7 @@ contactForm.addEventListener("submit", (event) => {
   const jenisPesan = document.querySelector(
     'input[name="jenis_pesan"]:checked',
   );
-  const topikDipilih = document.querySelectorAll('input[name="minat"]:checked');
+  const topikDipilih = document.querySelectorAll('input[name="minat[]"]:checked');
   const prodi = prodiInput.value;
   const pesan = pesanInput.value.trim();
 
@@ -88,6 +88,7 @@ contactForm.addEventListener("submit", (event) => {
 
   formFeedback.textContent = "Form berhasil divalidasi.";
   formFeedback.className = "form-feedback-success";
+  contactForm.submit();
 });
 
 contactForm.addEventListener("reset", () => {
