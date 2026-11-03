@@ -18,3 +18,6 @@ pada p7, saya melakukan:
 16. memakai `htmlspecialchars()` saat nampilin data.
 17. mempisahakan data peminjaman dan kontak agar itu berdua tidak sama eaaa
 18. mencoba di web , validasi , dan sampai di tampikan akhir dan berhasil
+19. mencoba validasi semua section dan f12 apakah berjalan seperti normal , dan semua nya lancar tanpa kendala
+20. semua berjalan seperti semestinya , Uji menu, formulir, validasi, pemrosesan POST, dan penampilan data
+21. mencoba menghapus beberapa kode dan mengetest apa yang terjadi jika ada yang terhapus , dan ternyata langsung eror di bagian permohonan
