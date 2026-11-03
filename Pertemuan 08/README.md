@@ -9,4 +9,6 @@ pada p7, saya melakukan:
 7. Saya mencoba agar bisa sama dengan mengotak atik style nya dan index
 8. lalu index nya juga saya tambahkan beberapa php lagi supaya data formulirnya masuk di bagian peminjaman juga
 9. walau sudah mengikut saya style kontak , tetap saja tidak berubah sepertinya ada beberapa hal yang tidak saya perhatikan juga, jadi saya mencari solusi kembali sambil merubah beberapa hal di index
-10. saya merubah index dan menambah hal2 lain , seperti data hasil hanya ditampilkan sekali setelah pengiriman
+10. saya merubah index dan menambah hal2 lain , seperti data hasil hanya ditampilkan sekali setelah pengiriman ($submittedForm = $\_SESSION["form_submission"] ?? null; )
+11. saya merubah index , script dan style , dan berubah beberapa kata koding , jadi seperti data hasil yang hanya ditampilkan sekali itu saya hapus , dan saya membiarkan agar itu tetap muncul
+12. script nya juga mengalami perubahan dikarenakan indexnya berubah , jadi saya ganti beberapa kode dan menambahkan kode baru

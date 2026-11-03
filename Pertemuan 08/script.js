@@ -13,6 +13,100 @@ if (navToggle && navMenu) {
   });
 }
 
+// Validasi formulir Peminjaman Fasilitas di sisi klien.
+const loanForms = document.querySelectorAll(
+  'form[data-validation="peminjaman"]',
+);
+
+loanForms.forEach((loanForm) => {
+  const formFeedback = loanForm.querySelector("[data-form-feedback]");
+  const fields = {
+    nama: loanForm.elements.namedItem("loan_nama"),
+    email: loanForm.elements.namedItem("loan_email"),
+    fasilitas: loanForm.elements.namedItem("loan_fasilitas"),
+    tanggal: loanForm.elements.namedItem("loan_tanggal"),
+    waktu: loanForm.elements.namedItem("loan_waktu"),
+    keperluan: loanForm.elements.namedItem("loan_keperluan"),
+  };
+
+  const showError = (message) => {
+    if (formFeedback) {
+      formFeedback.textContent = message;
+      formFeedback.className = "form-feedback-error";
+    }
+  };
+
+  loanForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    fields.nama.value = fields.nama.value.trim();
+    fields.email.value = fields.email.value.trim();
+    fields.keperluan.value = fields.keperluan.value.trim();
+
+    if (formFeedback) {
+      formFeedback.textContent = "";
+      formFeedback.className = "form-feedback";
+    }
+
+    const namaLength = Array.from(fields.nama.value).length;
+    if (namaLength < 3 || namaLength > 50) {
+      showError("Nama penanggung jawab harus terdiri dari 3 sampai 50 karakter.");
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.email.value)) {
+      showError("Masukkan alamat email yang valid.");
+      return;
+    }
+
+    const fasilitasValid = [
+      "ruang-kelas",
+      "laboratorium",
+      "aula",
+      "Proyektor",
+    ].includes(fields.fasilitas.value);
+    if (!fasilitasValid) {
+      showError("Pilih fasilitas yang tersedia.");
+      return;
+    }
+
+    if (
+      !/^\d{4}-\d{2}-\d{2}$/.test(fields.tanggal.value) ||
+      Number.isNaN(fields.tanggal.valueAsNumber)
+    ) {
+      showError("Masukkan tanggal peminjaman yang valid.");
+      return;
+    }
+
+    if (!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(fields.waktu.value)) {
+      showError("Masukkan waktu peminjaman yang valid.");
+      return;
+    }
+
+    const keperluanLength = Array.from(fields.keperluan.value).length;
+    if (keperluanLength < 1 || keperluanLength > 300) {
+      showError("Keperluan wajib diisi dan maksimal 300 karakter.");
+      return;
+    }
+
+    loanForm.submit();
+  });
+
+  loanForm.addEventListener("reset", () => {
+    if (formFeedback) {
+      formFeedback.textContent = "";
+      formFeedback.className = "form-feedback";
+    }
+  });
+
+  loanForm.addEventListener("input", () => {
+    if (formFeedback) {
+      formFeedback.textContent = "";
+      formFeedback.className = "form-feedback";
+    }
+  });
+});
+
 // Validasi formulir Kontak.
 // Selector menggunakan atribut/class, bukan ID formulir tertentu,
 // sehingga formulir lain dapat ditambahkan dengan ID yang berbeda.

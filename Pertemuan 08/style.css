@@ -145,7 +145,7 @@ section {
 
 /* Bagian Kontak */
 #contact {
-  background-color: #6a85a1;
+  background-color: #fafcfd;
   border: 1px solid #cbd5e1;
   padding: 20px;
   margin: 0;
@@ -236,14 +236,16 @@ section {
   cursor: pointer;
 }
 
-#hasilFormulir {
+#hasilFormulir,
+#hasilPeminjaman {
   background-color: #ffffff;
   border: 1px solid #d0d7de;
   padding: 20px;
   margin: 0;
 }
 
-#hasilFormulir h2 {
+#hasilFormulir h2,
+#hasilPeminjaman h3 {
   color: #003366;
   border-bottom: 2px solid #003366;
   padding-bottom: 6px;
@@ -251,7 +253,8 @@ section {
   margin-bottom: 16px;
 }
 
-#hasilFormulir p {
+#hasilFormulir p,
+#hasilPeminjaman p {
   margin: 6px 0;
   padding: 6px 0;
   border-bottom: 1px solid #e6e6e6;
@@ -299,7 +302,8 @@ footer p {
 
   #contact,
   #Permohonan,
-  #hasilFormulir {
+  #hasilFormulir,
+  #hasilPeminjaman {
     grid-column: 1 / -1;
   }
 
