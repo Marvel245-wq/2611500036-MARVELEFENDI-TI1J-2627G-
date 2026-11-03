@@ -281,7 +281,7 @@ switch ($programStudi) {
 							value="<?= htmlspecialchars($loanOld["nama"] ?? "", ENT_QUOTES, "UTF-8") ?>"
 							placeholder="Masukkan nama lengkap"
 							minlength="3"
-							maxlength="30"
+							maxlength="50"
 							required />
 					</div>
 
