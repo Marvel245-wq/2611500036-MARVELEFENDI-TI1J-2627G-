@@ -1,36 +1,50 @@
 <?php
 session_start();
 
-// P7: Memproses data formulir dan menyimpannya ke dalam session.
+// P7: Menyimpan hasil formulir sementara agar tidak terkirim ulang saat refresh.
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-	$nama = trim((string) ($_POST["nama"] ?? ""));
-	$email = trim((string) ($_POST["email"] ?? ""));
-	$semesterForm = trim((string) ($_POST["semester"] ?? ""));
-	$tanggal = trim((string) ($_POST["tanggal"] ?? ""));
-	$jenisPesan = trim((string) ($_POST["jenis_pesan"] ?? ""));
-	$minat = $_POST["minat"] ?? [];
-	$prodi = trim((string) ($_POST["prodi"] ?? ""));
-	$pesan = trim((string) ($_POST["pesan"] ?? ""));
+	$formType = trim((string) ($_POST["form_type"] ?? ""));
 
-	// Checkbox dapat mengirimkan lebih dari satu nilai.
-	if (!is_array($minat)) {
-		$minat = [];
+	if ($formType === "contact") {
+		$minat = $_POST["minat"] ?? [];
+		if (!is_array($minat)) {
+			$minat = [];
+		}
+
+		$_SESSION["form_submission"] = [
+			"type" => "contact",
+			"nama" => trim((string) ($_POST["nama"] ?? "")),
+			"email" => trim((string) ($_POST["email"] ?? "")),
+			"semester" => trim((string) ($_POST["semester"] ?? "")),
+			"tanggal" => trim((string) ($_POST["tanggal"] ?? "")),
+			"jenis_pesan" => trim((string) ($_POST["jenis_pesan"] ?? "")),
+			"minat" => array_values(array_filter($minat, "is_string")),
+			"prodi" => trim((string) ($_POST["prodi"] ?? "")),
+			"pesan" => trim((string) ($_POST["pesan"] ?? "")),
+		];
+	} elseif ($formType === "peminjaman") {
+		$_SESSION["form_submission"] = [
+			"type" => "peminjaman",
+			"nama" => trim((string) ($_POST["loan_nama"] ?? "")),
+			"email" => trim((string) ($_POST["loan_email"] ?? "")),
+			"fasilitas" => trim((string) ($_POST["loan_fasilitas"] ?? "")),
+			"tanggal" => trim((string) ($_POST["loan_tanggal"] ?? "")),
+			"waktu" => trim((string) ($_POST["loan_waktu"] ?? "")),
+			"keperluan" => trim((string) ($_POST["loan_keperluan"] ?? "")),
+		];
+	} else {
+		http_response_code(400);
+		exit("Jenis formulir tidak dikenal.");
 	}
 
-	// Menyimpan setiap nilai formulir ke dalam session secara terpisah.
-	$_SESSION["nama"] = $nama;
-	$_SESSION["email"] = $email;
-	$_SESSION["semester"] = $semesterForm;
-	$_SESSION["tanggal"] = $tanggal;
-	$_SESSION["jenis_pesan"] = $jenisPesan;
-	$_SESSION["minat"] = $minat;
-	$_SESSION["prodi"] = $prodi;
-	$_SESSION["pesan"] = $pesan;
-
-	// PRG: mencegah pengiriman POST berulang ketika halaman dimuat ulang.
-	header("Location: index.php#contact");
+	// PRG dan anchor hasil: refresh tidak mengirim ulang data formulir.
+	header("Location: index.php#hasilFormulir");
 	exit;
 }
+
+// Data hasil hanya ditampilkan sekali, lalu dihapus dari session.
+$submittedForm = $_SESSION["form_submission"] ?? null;
+unset($_SESSION["form_submission"]);
 
 // Mengamankan data sebelum ditampilkan kembali ke halaman HTML.
 // P6: PHP dasar dan pemrograman sisi peladen
@@ -107,7 +121,7 @@ switch ($programStudi) {
 				<li><a href="#home">Beranda</a></li>
 				<li><a href="#about">Tentang</a></li>
 				<li><a href="#contact">Kontak</a></li>
-				<li><a href="#Peminjaman Fasilitas">Peminjaman Fasilitas</a></li>
+				<li><a href="#Permohonan">Peminjaman Fasilitas</a></li>
 			</ul>
 		</nav>
 	</header>
@@ -174,20 +188,21 @@ switch ($programStudi) {
 				</ol>
 			</article>
 		</section>
-		<section id="Permohonan Peminjaman Fasilitas Kampus">
+		<section id="Permohonan">
 			<h2>Permohonan Peminjaman Fasilitas Kampus</h2>
 
 			<article>
 				<h3>Formulir Peminjaman</h3>
-				<form id="peminjamanForm" class="js-peminjaman-form" data-validation="peminjaman" action="index.php" method="post" novalidate>
+				<form id="peminjamanForm" class="js-peminjaman-form" data-validation="peminjaman" action="index.php" method="post">
+					<input type="hidden" name="form_type" value="peminjaman" />
 					<div class="form-group">
-						<label for="Nama Penanggung Jawab">Nama Penanggung Jawab</label><br />
+						<label for="loan_nama">Nama Penanggung Jawab</label><br />
 
 						<input
 							class="input-form"
 							type="text"
-							id="nama"
-							name="nama"
+							id="loan_nama"
+							name="loan_nama"
 							placeholder="Masukkan nama lengkap"
 							minlength="3"
 							maxlength="50"
@@ -195,40 +210,54 @@ switch ($programStudi) {
 					</div>
 
 					<div class="form-group">
-						<label for="Jenis Fasilitas">Jenis Fasilitas</label><br />
+						<label for="loan_email">Email Penanggung Jawab</label><br />
 
-						<input class="input-form" type="email" id="email" name="email" placeholder="nama@email.com" required />
+						<input class="input-form" type="email" id="loan_email" name="loan_email" placeholder="nama@email.com" required />
 					</div>
 
 					<div class="form-group">
-						<label for="fasilitas">Fasilitas yang Diminta</label><br />
+						<label for="loan_fasilitas">Fasilitas yang Diminta</label><br />
 
-						<select class="input-form" id="fasilitas" name="fasilitas" required>
+						<select class="input-form" id="loan_fasilitas" name="loan_fasilitas" required>
 							<option value="">-- Pilih Fasilitas --</option>
 							<option value="ruang-kelas">Ruang Kelas</option>
 							<option value="laboratorium">Laboratorium</option>
-							<option value="perpustakaan">Perpustakaan</option>
+							<option value="aula">Aula</option>
+							<option value="Proyektor">Proyektor</option>
 						</select>
 					</div>
 
 					<div class="form-group">
-						<label for="tanggal-peminjaman">Tanggal Peminjaman</label><br />
+						<label for="loan_tanggal">Tanggal Peminjaman</label><br />
 
-						<input class="input-form" type="date" id="tanggal-peminjaman" name="tanggal-peminjaman" required />
+						<input class="input-form" type="date" id="loan_tanggal" name="loan_tanggal" required />
 					</div>
 
 					<div class="form-group">
-						<label for="waktu-peminjaman">Waktu Peminjaman</label><br />
+						<label for="loan_waktu">Waktu Peminjaman</label><br />
 
-						<input class="input-form" type="time" id="waktu-peminjaman" name="waktu-peminjaman" required />
+						<input class="input-form" type="time" id="loan_waktu" name="loan_waktu" required />
 					</div>
+					<div class="form-group">
+						<label for="loan_keperluan">Keperluan Peminjaman</label><br />
 
-					<button type="submit" class="btn btn-primary">Kirim Permohonan</button>
+						<textarea
+							class="input-form"
+							id="loan_keperluan"
+							name="loan_keperluan"
+							maxlength="300"
+							placeholder="Tulis keperluan Anda"
+							required></textarea>
+					</div>
+					<button type="submit">Kirim Permohonan</button>
+					<button type="reset">Batal</button>
+					<p class="form-feedback" data-form-feedback aria-live="polite"></p>
 				</form>
 			</article>
 		</section>
 
 		<section id="contact">
+
 			<h2>Kontak</h2>
 
 			<p>
@@ -237,6 +266,7 @@ switch ($programStudi) {
 			</p>
 
 			<form id="contactForm" class="js-contact-form" data-validation="contact" action="index.php" method="post" novalidate>
+				<input type="hidden" name="form_type" value="contact" />
 				<div class="form-group">
 					<label for="nama">Nama Lengkap</label><br />
 
@@ -316,22 +346,32 @@ switch ($programStudi) {
 				<p class="form-feedback" data-form-feedback aria-live="polite"></p>
 			</form>
 
-			<?php if (isset($_SESSION["nama"])): ?>
-				<article id="hasilKontak" class="submission-result" aria-live="polite">
-					<h3>Data Formulir yang Dikirim</h3>
-					<p><strong>Nama Lengkap:</strong> <?= htmlspecialchars($_SESSION["nama"] ?? "", ENT_QUOTES, "UTF-8") ?></p>
-					<p><strong>Email:</strong> <?= htmlspecialchars($_SESSION["email"] ?? "", ENT_QUOTES, "UTF-8") ?></p>
-					<p><strong>Semester:</strong> <?= htmlspecialchars($_SESSION["semester"] ?? "", ENT_QUOTES, "UTF-8") ?></p>
-					<p><strong>Tanggal Kunjungan:</strong> <?= htmlspecialchars($_SESSION["tanggal"] ?? "", ENT_QUOTES, "UTF-8") ?></p>
-					<p><strong>Jenis Pesan:</strong> <?= htmlspecialchars($_SESSION["jenis_pesan"] ?? "", ENT_QUOTES, "UTF-8") ?></p>
-					<p><strong>Topik yang Diminati:</strong>
-						<?= htmlspecialchars(implode(", ", $_SESSION["minat"] ?? []), ENT_QUOTES, "UTF-8") ?>
-					</p>
-					<p><strong>Program Studi:</strong> <?= htmlspecialchars($_SESSION["prodi"] ?? "", ENT_QUOTES, "UTF-8") ?></p>
-					<p><strong>Pesan:</strong> <?= nl2br(htmlspecialchars($_SESSION["pesan"] ?? "", ENT_QUOTES, "UTF-8")) ?></p>
-				</article>
-			<?php endif; ?>
 		</section>
+
+		<?php if ($submittedForm !== null): ?>
+			<section id="hasilFormulir" class="submission-result" aria-live="polite">
+				<h2>Data Formulir yang Dikirim</h2>
+				<?php if ($submittedForm["type"] === "peminjaman"): ?>
+					<p><strong>Jenis Formulir:</strong> Permohonan Peminjaman Fasilitas</p>
+					<p><strong>Nama Penanggung Jawab:</strong> <?= htmlspecialchars($submittedForm["nama"], ENT_QUOTES, "UTF-8") ?></p>
+					<p><strong>Email:</strong> <?= htmlspecialchars($submittedForm["email"], ENT_QUOTES, "UTF-8") ?></p>
+					<p><strong>Fasilitas:</strong> <?= htmlspecialchars($submittedForm["fasilitas"], ENT_QUOTES, "UTF-8") ?></p>
+					<p><strong>Tanggal Peminjaman:</strong> <?= htmlspecialchars($submittedForm["tanggal"], ENT_QUOTES, "UTF-8") ?></p>
+					<p><strong>Waktu Peminjaman:</strong> <?= htmlspecialchars($submittedForm["waktu"], ENT_QUOTES, "UTF-8") ?></p>
+					<p><strong>Keperluan:</strong> <?= nl2br(htmlspecialchars($submittedForm["keperluan"], ENT_QUOTES, "UTF-8")) ?></p>
+				<?php else: ?>
+					<p><strong>Jenis Formulir:</strong> Kontak</p>
+					<p><strong>Nama Lengkap:</strong> <?= htmlspecialchars($submittedForm["nama"], ENT_QUOTES, "UTF-8") ?></p>
+					<p><strong>Email:</strong> <?= htmlspecialchars($submittedForm["email"], ENT_QUOTES, "UTF-8") ?></p>
+					<p><strong>Semester:</strong> <?= htmlspecialchars($submittedForm["semester"], ENT_QUOTES, "UTF-8") ?></p>
+					<p><strong>Tanggal Kunjungan:</strong> <?= htmlspecialchars($submittedForm["tanggal"], ENT_QUOTES, "UTF-8") ?></p>
+					<p><strong>Jenis Pesan:</strong> <?= htmlspecialchars($submittedForm["jenis_pesan"], ENT_QUOTES, "UTF-8") ?></p>
+					<p><strong>Topik yang Diminati:</strong> <?= htmlspecialchars(implode(", ", $submittedForm["minat"]), ENT_QUOTES, "UTF-8") ?></p>
+					<p><strong>Program Studi:</strong> <?= htmlspecialchars($submittedForm["prodi"], ENT_QUOTES, "UTF-8") ?></p>
+					<p><strong>Pesan:</strong> <?= nl2br(htmlspecialchars($submittedForm["pesan"], ENT_QUOTES, "UTF-8")) ?></p>
+				<?php endif; ?>
+			</section>
+		<?php endif; ?>
 	</main>
 
 	<footer>

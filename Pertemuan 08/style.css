@@ -62,7 +62,7 @@ nav ul {
   list-style: none;
 }
 
-nav a {
+nav a { 
   color: #ffffff;
   font-weight: bold;
   text-decoration: none;
@@ -145,7 +145,7 @@ section {
 
 /* Bagian Kontak */
 #contact {
-  background-color: #f8fafc;
+  background-color: #6a85a1;
   border: 1px solid #cbd5e1;
   padding: 20px;
   margin: 0;
@@ -195,6 +195,69 @@ section {
   cursor: pointer;
 }
 
+/* Bagian Permohonan Peminjaman Fasilitas Kampus */
+#Permohonan {
+  background-color: #ffffff;
+  border: 1px solid #d0d7de;
+  padding: 20px;
+  margin: 0;
+}
+
+#Permohonan h2 {
+  color: #003366;
+  border-bottom: 2px solid #003366;
+  padding-bottom: 6px;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+#Permohonan h3 {
+  color: #1f4e78;
+  margin-bottom: 6px;
+}
+
+#Permohonan label {
+  color: #1f2937;
+  font-weight: bold;
+}
+
+#Permohonan textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+#Permohonan button {
+  background-color: #003366;
+  color: #ffffff;
+  font-weight: bold;
+  padding: 8px 14px;
+  margin: 8px 6px 0 0;
+  border: 1px solid #003366;
+  cursor: pointer;
+}
+
+#hasilFormulir {
+  background-color: #ffffff;
+  border: 1px solid #d0d7de;
+  padding: 20px;
+  margin: 0;
+}
+
+#hasilFormulir h2 {
+  color: #003366;
+  border-bottom: 2px solid #003366;
+  padding-bottom: 6px;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+#hasilFormulir p {
+  margin: 6px 0;
+  padding: 6px 0;
+  border-bottom: 1px solid #e6e6e6;
+  line-height: 1.5;
+}
+
 /* Footer */
 footer {
   background-color: #003366;
@@ -234,7 +297,9 @@ footer p {
     grid-template-columns: 1fr 1fr;
   }
 
-  #contact {
+  #contact,
+  #Permohonan,
+  #hasilFormulir {
     grid-column: 1 / -1;
   }
 
