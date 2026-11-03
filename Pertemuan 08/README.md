@@ -12,3 +12,9 @@ pada p7, saya melakukan:
 10. saya merubah index dan menambah hal2 lain , seperti data hasil hanya ditampilkan sekali setelah pengiriman ($submittedForm = $\_SESSION["form_submission"] ?? null; )
 11. saya merubah index , script dan style , dan berubah beberapa kata koding , jadi seperti data hasil yang hanya ditampilkan sekali itu saya hapus , dan saya membiarkan agar itu tetap muncul
 12. script nya juga mengalami perubahan dikarenakan indexnya berubah , jadi saya ganti beberapa kode dan menambahkan kode baru
+13. Menambahkan pemrosesan data formulir menggunakan PHP.
+14. Menerapkan session dan pola Post-Redirect-Get (PRG).
+15. memvalidasi form ke java script apakah bisa , dan mencoba ulang ke php agar data masih di server
+16. memakai `htmlspecialchars()` saat nampilin data.
+17. mempisahakan data peminjaman dan kontak agar itu berdua tidak sama eaaa
+18. mencoba di web , validasi , dan sampai di tampikan akhir dan berhasil
