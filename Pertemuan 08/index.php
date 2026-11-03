@@ -107,6 +107,7 @@ switch ($programStudi) {
 				<li><a href="#home">Beranda</a></li>
 				<li><a href="#about">Tentang</a></li>
 				<li><a href="#contact">Kontak</a></li>
+				<li><a href="#Peminjaman Fasilitas">Peminjaman Fasilitas</a></li>
 			</ul>
 		</nav>
 	</header>
@@ -171,6 +172,59 @@ switch ($programStudi) {
 					}
 					?>
 				</ol>
+			</article>
+		</section>
+		<section id="Permohonan Peminjaman Fasilitas Kampus">
+			<h2>Permohonan Peminjaman Fasilitas Kampus</h2>
+
+			<article>
+				<h3>Formulir Peminjaman</h3>
+				<form id="peminjamanForm" class="js-peminjaman-form" data-validation="peminjaman" action="index.php" method="post" novalidate>
+					<div class="form-group">
+						<label for="Nama Penanggung Jawab">Nama Penanggung Jawab</label><br />
+
+						<input
+							class="input-form"
+							type="text"
+							id="nama"
+							name="nama"
+							placeholder="Masukkan nama lengkap"
+							minlength="3"
+							maxlength="50"
+							required />
+					</div>
+
+					<div class="form-group">
+						<label for="Jenis Fasilitas">Jenis Fasilitas</label><br />
+
+						<input class="input-form" type="email" id="email" name="email" placeholder="nama@email.com" required />
+					</div>
+
+					<div class="form-group">
+						<label for="fasilitas">Fasilitas yang Diminta</label><br />
+
+						<select class="input-form" id="fasilitas" name="fasilitas" required>
+							<option value="">-- Pilih Fasilitas --</option>
+							<option value="ruang-kelas">Ruang Kelas</option>
+							<option value="laboratorium">Laboratorium</option>
+							<option value="perpustakaan">Perpustakaan</option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="tanggal-peminjaman">Tanggal Peminjaman</label><br />
+
+						<input class="input-form" type="date" id="tanggal-peminjaman" name="tanggal-peminjaman" required />
+					</div>
+
+					<div class="form-group">
+						<label for="waktu-peminjaman">Waktu Peminjaman</label><br />
+
+						<input class="input-form" type="time" id="waktu-peminjaman" name="waktu-peminjaman" required />
+					</div>
+
+					<button type="submit" class="btn btn-primary">Kirim Permohonan</button>
+				</form>
 			</article>
 		</section>
 
