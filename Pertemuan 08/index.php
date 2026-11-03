@@ -337,7 +337,7 @@ switch ($programStudi) {
 					<p><strong>Email:</strong> <?= htmlspecialchars($submittedLoan["email"], ENT_QUOTES, "UTF-8") ?></p>
 					<p><strong>Fasilitas:</strong> <?= htmlspecialchars($facilityLabels[$submittedLoan["fasilitas"]] ?? "", ENT_QUOTES, "UTF-8") ?></p>
 					<p><strong>Tanggal Peminjaman:</strong> <?= htmlspecialchars($submittedLoan["tanggal"], ENT_QUOTES, "UTF-8") ?></p>
-					<p><strong>Waktu Peminjaman:</strong> <?= htmlspecialchars($submittedLoan["waktu"], ENT_QUOTES, "UTF-8") ?></p>
+
 					<p><strong>Keperluan:</strong> <?= nl2br(htmlspecialchars($submittedLoan["keperluan"], ENT_QUOTES, "UTF-8")) ?></p>
 				</article>
 			<?php endif; ?>
