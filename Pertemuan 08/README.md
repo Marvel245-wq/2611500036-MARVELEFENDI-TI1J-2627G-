@@ -21,3 +21,4 @@ pada p7, saya melakukan:
 19. mencoba validasi semua section dan f12 apakah berjalan seperti normal , dan semua nya lancar tanpa kendala
 20. semua berjalan seperti semestinya , Uji menu, formulir, validasi, pemrosesan POST, dan penampilan data
 21. mencoba menghapus beberapa kode dan mengetest apa yang terjadi jika ada yang terhapus , dan ternyata langsung eror di bagian permohonan
+22. sudah berjalan normal dan berhasil
