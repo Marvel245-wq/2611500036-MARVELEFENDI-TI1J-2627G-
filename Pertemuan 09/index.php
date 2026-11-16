@@ -1,6 +1,21 @@
 <?php
 session_start();
 
+include("fungsi.php");
+
+echo "yihaww <b>lompat</b> tebing";
+echo bersihkan("yihaww <b>lompat</b> tebing");
+echo "<script>alert('yihaww');</script>";
+echo bersihkan("<script>alert('yihaww');</script>");
+/* echo "<style>
+* {
+    font-weight: bolder;
+	color: white;
+}</style>"; */
+
+$contohArray = ["supri", "wonka", "dahsyat", "ucup"];
+echo $contohArray[1];
+
 // P7: Memproses data formulir dan menyimpannya ke dalam session.
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 	$nama = trim((string) ($_POST["nama"] ?? ""));
@@ -17,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 		$minat = [];
 	}
 
-	// Menyimpan setiap nilai formulir ke dalam session secara terpisah.
+	/* // Menyimpan setiap nilai formulir ke dalam session secara terpisah.
 	$_SESSION["nama"] = $nama;
 	$_SESSION["email"] = $email;
 	$_SESSION["semester"] = $semesterForm;
@@ -25,19 +40,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 	$_SESSION["jenis_pesan"] = $jenisPesan;
 	$_SESSION["minat"] = $minat;
 	$_SESSION["prodi"] = $prodi;
-	$_SESSION["pesan"] = $pesan;
+	$_SESSION["pesan"] = $pesan; */
+
+	// P9
+	$_SESSION["formData"] = [
+		"nama"         => $nama,
+		"email"        => $email,
+		"semester"     => $semesterForm,
+		"tanggal"      => $tanggal,
+		"jenis_pesan"  => $jenisPesan,
+		"minat"        => $minat,
+		"prodi"        => $prodi,
+		"pesan"        => $pesan
+	];
 
 	// PRG: mencegah pengiriman POST berulang ketika halaman dimuat ulang.
 	header("Location: index.php#contact");
 	exit;
 }
+echo $_SESSION["formData"]["nama"] ?? "";
 
 // Mengamankan data sebelum ditampilkan kembali ke halaman HTML.
 // P6: PHP dasar dan pemrograman sisi peladen
 // Bagian 1: Variabel dan konstanta
-$nim = "0344300002";
-$namaMahasiswa = "Cantika Putih";
-$programStudi = "SI";
+$nim = "2611500036";
+$namaMahasiswa = "Marvel Efendi";
+$programStudi = "TI";
 $tahunAkademik = "2026/2027";
 $semester = 4;
 $ipk = 3.75;
@@ -45,7 +73,7 @@ $statusAktif = true;
 $catatanTambahan = null;
 
 const NAMA_MATA_KULIAH = "Pemrograman Web Dasar";
-const PROFIL_GITHUB = "satpamal";
+const PROFIL_GITHUB = "Marvel245-wq/2611500036-MARVELEFENDI-TI1J-2627G-";
 
 // Bagian 2: Operator
 $batasSemester = 8;
@@ -179,7 +207,7 @@ switch ($programStudi) {
 
 			<p>
 				Kunjungi
-				<a target="_blank" href="https://github.com/<?= PROFIL_GITHUB ?>">profil GitHub saya</a>.
+				<a target="_blank" href="https://github.com/Marvel245-wq/2611500036-MARVELEFENDI-TI1J-2627G-<?= PROFIL_GITHUB ?>">profil GitHub saya</a>.
 			</p>
 
 			<form id="contactForm" class="js-contact-form" data-validation="contact" action="index.php" method="post" novalidate>
@@ -262,21 +290,39 @@ switch ($programStudi) {
 				<p class="form-feedback" data-form-feedback aria-live="polite"></p>
 			</form>
 
-			<?php if (isset($_SESSION["nama"])): ?>
+			<?php if (isset($_SESSION["formData"])): ?>
 				<article id="hasilKontak" class="submission-result" aria-live="polite">
 					<h3>Data Formulir yang Dikirim</h3>
-					<p><strong>Nama Lengkap:</strong> <?= htmlspecialchars($_SESSION["nama"] ?? "", ENT_QUOTES, "UTF-8") ?></p>
-					<p><strong>Email:</strong> <?= htmlspecialchars($_SESSION["email"] ?? "", ENT_QUOTES, "UTF-8") ?></p>
-					<p><strong>Semester:</strong> <?= htmlspecialchars($_SESSION["semester"] ?? "", ENT_QUOTES, "UTF-8") ?></p>
-					<p><strong>Tanggal Kunjungan:</strong> <?= htmlspecialchars($_SESSION["tanggal"] ?? "", ENT_QUOTES, "UTF-8") ?></p>
-					<p><strong>Jenis Pesan:</strong> <?= htmlspecialchars($_SESSION["jenis_pesan"] ?? "", ENT_QUOTES, "UTF-8") ?></p>
-					<p><strong>Topik yang Diminati:</strong>
-						<?= htmlspecialchars(implode(", ", $_SESSION["minat"] ?? []), ENT_QUOTES, "UTF-8") ?>
-					</p>
-					<p><strong>Program Studi:</strong> <?= htmlspecialchars($_SESSION["prodi"] ?? "", ENT_QUOTES, "UTF-8") ?></p>
-					<p><strong>Pesan:</strong> <?= nl2br(htmlspecialchars($_SESSION["pesan"] ?? "", ENT_QUOTES, "UTF-8")) ?></p>
+					<?php
+					$labels = [
+						"nama"        => "Nama Lengkap",
+						"email"       => "Email",
+						"semester"    => "Semester",
+						"tanggal"     => "Tanggal Kunjungan",
+						"jenis_pesan" => "Jenis Pesan",
+						"minat"       => "Topik yang Diminati",
+						"prodi"       => "Program Studi",
+						"pesan"       => "Pesan"
+					];
+
+					foreach ($labels as $key => $label):
+						// PERBAIKAN: Ubah "form_data" menjadi "formData"
+						$value = $_SESSION["formData"][$key] ?? "";
+
+						if ($key === "minat"):
+							$displayValue = is_array($value) ? implode(", ", $value) : "";
+							$displayValue = bersihkan($displayValue);
+						elseif ($key === "pesan"):
+							$displayValue = nl2br(bersihkan($value));
+						else:
+							$displayValue = bersihkan($value);
+						endif;
+					?>
+						<p><strong><?= tebal(bersihkan($label)) ?>:</strong> <?= $displayValue ?></p>
+					<?php endforeach; ?>
 				</article>
 			<?php endif; ?>
+
 		</section>
 	</main>
 
